@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: map_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: map_admin
+      POSTGRES_PASSWORD: map_secret_password
+      POSTGRES_DB: map_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - map_pgdata:/var/lib/postgresql/data
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U map_admin -d map_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  pgweb:
+    image: sosedoff/pgweb:latest
+    container_name: map_pgweb
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://map_admin:map_secret_password@postgres:5432/map_db?sslmode=disable
+    ports:
+      - "8080:8081"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  map_pgdata:
+    driver: local

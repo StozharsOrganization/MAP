@@ -1,0 +1,329 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-map-navy: #0e2238;
+  --color-map-navy-dark: #081626;
+  --color-map-navy-light: #163659;
+  --color-map-blue: #3b7da5;
+  --color-map-blue-light: #5a9bc4;
+  --color-map-sky: #eaf2f8;
+  --color-map-accent: #2563eb;
+}
+
+:root {
+  --background: #081626;
+  --foreground: #f1f5f9;
+}
+
+html.light {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  color-scheme: light;
+}
+
+html.dark {
+  --background: #081626;
+  --foreground: #f1f5f9;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  overflow-x: hidden;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Custom scrollbars for Dark Theme */
+html.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+html.dark ::-webkit-scrollbar-track {
+  background: #081626;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #1e3a5f;
+  border-radius: 4px;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3b7da5;
+}
+
+/* Custom scrollbars for Light Theme */
+html.light ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+html.light ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+html.light ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* In-place edit animations */
+.admin-editable-hover {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.admin-editable-hover:hover {
+  outline: 2px dashed #3b82f6;
+  outline-offset: 4px;
+  cursor: text;
+}
+
+/* ==========================================================================
+   LIGHT MODE DESIGN SYSTEM OVERRIDES
+   ========================================================================== */
+
+/* Header in Light Mode */
+html.light header {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.05) !important;
+}
+
+html.light header nav a:not([class*="bg-white/10"]) {
+  color: #475569 !important;
+}
+html.light header nav a:not([class*="bg-white/10"]):hover {
+  color: #0f172a !important;
+  background-color: #f1f5f9 !important;
+}
+html.light header nav a[class*="bg-white/10"] {
+  background-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+/* Language and Theme pill controls in Light Mode */
+html.light .bg-\[\#0e2238\].rounded-full,
+html.light .theme-switcher-container {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light .bg-\[\#0e2238\].rounded-full button:not(.bg-\[\#3b7da5\]),
+html.light .theme-switcher-container button:not(.bg-\[\#3b7da5\]) {
+  color: #64748b !important;
+}
+html.light .bg-\[\#0e2238\].rounded-full button:not(.bg-\[\#3b7da5\]):hover,
+html.light .theme-switcher-container button:not(.bg-\[\#3b7da5\]):hover {
+  color: #0f172a !important;
+  background-color: #e2e8f0 !important;
+}
+
+/* Base Surfaces in Light Mode */
+html.light .bg-\[\#081626\] {
+  background-color: #f8fafc !important;
+}
+html.light .bg-\[\#081626\]\/90,
+html.light .bg-\[\#081626\]\/80,
+html.light .bg-\[\#081626\]\/70,
+html.light .bg-\[\#081626\]\/50 {
+  background-color: rgba(248, 250, 252, 0.85) !important;
+}
+
+html.light .bg-\[\#0e2238\] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+}
+
+html.light .bg-\[\#0e2238\]\/90,
+html.light .bg-\[\#0e2238\]\/80 {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+}
+
+html.light .bg-\[\#0b1d30\] {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light .bg-\[\#050f1a\] {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #475569 !important;
+}
+
+/* Card hover states in Light Mode */
+html.light .hover\:bg-\[\#112a45\]:hover,
+html.light .hover\:bg-\[\#122c4a\]:hover {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+}
+
+/* Gradient banner transforms in Light Mode */
+html.light .bg-gradient-to-br.from-\[\#0e2238\],
+html.light .bg-gradient-to-r.from-\[\#0e2238\],
+html.light .bg-gradient-to-br.from-\[\#0e2238\].to-\[\#122c4a\] {
+  background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 60%, #f8fafc 100%) !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05) !important;
+}
+
+/* Modal header gradient in Light Mode */
+html.light [role="dialog"] .bg-gradient-to-r.from-\[\#0e2238\],
+html.light .bg-gradient-to-r.from-\[\#0e2238\] {
+  background: linear-gradient(135deg, #f0f7ff 0%, #e2eaf4 100%) !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+/* Hero Section in Light Mode */
+html.light section.bg-\[\#0e2238\] {
+  background: linear-gradient(180deg, #f0f7ff 0%, #f8fafc 100%) !important;
+  color: #0f172a !important;
+}
+html.light section.bg-\[\#0e2238\] .bg-white\/10 {
+  background-color: rgba(59, 125, 165, 0.08) !important;
+  border-color: rgba(59, 125, 165, 0.2) !important;
+  color: #0369a1 !important;
+}
+
+/* Typography in Light Mode */
+html.light h1.text-white,
+html.light h2.text-white,
+html.light h3.text-white,
+html.light h4.text-white,
+html.light .text-2xl.text-white,
+html.light .text-3xl.text-white,
+html.light .text-4xl.text-white,
+html.light .text-5xl.text-white {
+  color: #0f172a !important;
+}
+
+html.light p.text-slate-100,
+html.light p.text-slate-200,
+html.light p.text-slate-300,
+html.light span.text-slate-200,
+html.light span.text-slate-300,
+html.light div.text-slate-200,
+html.light div.text-slate-300 {
+  color: #334155 !important;
+}
+
+html.light p.text-slate-400,
+html.light span.text-slate-400,
+html.light div.text-slate-400 {
+  color: #64748b !important;
+}
+
+html.light .text-sky-200,
+html.light .text-sky-300 {
+  color: #0284c7 !important;
+}
+
+/* Global Borders in Light Mode */
+html.light .border-white\/10,
+html.light .border-white\/15,
+html.light .border-white\/20 {
+  border-color: #e2e8f0 !important;
+}
+
+/* Form Inputs and Selects in Light Mode */
+html.light input:not([type="checkbox"]):not([type="radio"]),
+html.light textarea,
+html.light select {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+html.light option {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+/* Interactive SVG Map of Ukraine - Dark Mode (Default) */
+svg path.map-region {
+  fill: rgba(12, 33, 56, 0.85);
+  stroke: rgba(56, 189, 248, 0.3);
+  stroke-width: 0.85px;
+  stroke-linejoin: round;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+svg path.map-region:hover,
+svg path.map-region.map-region-hover {
+  fill: rgba(22, 54, 89, 0.95);
+  stroke: #38bdf8;
+  stroke-width: 1.4px;
+}
+
+svg path.map-region.map-region-active {
+  fill: rgba(59, 125, 165, 0.45) !important;
+  stroke: #fbbf24 !important;
+  stroke-width: 2px !important;
+  filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.4));
+}
+
+/* Interactive SVG Map of Ukraine - Light Mode */
+html.light svg path.map-region {
+  fill: #e2eaf4 !important;
+  stroke: #94a3b8 !important;
+  stroke-width: 0.85px !important;
+}
+
+html.light svg path.map-region:hover,
+html.light svg path.map-region.map-region-hover {
+  fill: #cbe0f5 !important;
+  stroke: #2563eb !important;
+  stroke-width: 1.4px !important;
+}
+
+html.light svg path.map-region.map-region-active {
+  fill: #bfdbfe !important;
+  stroke: #0284c7 !important;
+  stroke-width: 2px !important;
+  filter: drop-shadow(0 0 6px rgba(2, 132, 199, 0.35));
+}
+
+/* Light mode Map Canvas & Elements */
+html.light .map-canvas-container {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light .map-hud-badge {
+  background-color: rgba(255, 255, 255, 0.94) !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light .map-hud-badge .hud-title {
+  color: #0284c7 !important;
+}
+
+html.light .map-city-label:not(.selected) {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Mobile menu in Light Mode */
+html.light .md\:hidden.bg-\[\#081626\] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.1) !important;
+}
+html.light .md\:hidden.bg-\[\#081626\] a {
+  color: #334155 !important;
+}
+html.light .md\:hidden.bg-\[\#081626\] a:hover {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
