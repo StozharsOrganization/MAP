@@ -182,7 +182,7 @@ export default function InteractiveMapSection() {
                           hasCityHub ? 'cursor-pointer' : 'cursor-default'
                         } ${isHighlighted ? 'map-region-active' : ''} ${isHovered && !isHighlighted ? 'map-region-hover' : ''}`}
                       >
-                        <title>{region.nameUa}{hasCityHub ? ' — Осередок MAP' : ''}</title>
+                        <title>{`${region.nameUa}${hasCityHub ? ' — Осередок MAP' : ''}`}</title>
                       </path>
                     );
                   })}

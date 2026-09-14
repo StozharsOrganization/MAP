@@ -8,8 +8,8 @@ import MissionSection from '../components/MissionSection';
 import TestimonialsSection from '../components/TestimonialsSection';
 import PartnersSection from '../components/PartnersSection';
 
-// Zero Rebuild: Ensure real-time dynamic rendering on each request
-export const dynamic = 'force-dynamic';
+// ISR: Cache page for 60s, revalidatePath() in actions provides instant updates on content edit
+export const revalidate = 60;
 
 export default async function HomePage() {
   const db = await getDatabase();

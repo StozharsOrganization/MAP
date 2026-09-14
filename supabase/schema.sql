@@ -85,13 +85,30 @@ CREATE TABLE IF NOT EXISTS inbox_messages (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
 );
 
--- 8. Row Level Security (RLS) Policies
+-- 8. Donations (Payment Records)
+CREATE TABLE IF NOT EXISTS donations (
+    id VARCHAR(100) PRIMARY KEY,
+    project_id VARCHAR(100),
+    project_title TEXT,
+    amount NUMERIC NOT NULL CHECK (amount > 0),
+    frequency VARCHAR(20) DEFAULT 'once' CHECK (frequency IN ('once', 'monthly')),
+    payment_method VARCHAR(50),
+    payment_provider VARCHAR(50) DEFAULT 'stub',
+    payment_status VARCHAR(20) DEFAULT 'completed' CHECK (payment_status IN ('pending', 'completed', 'failed')),
+    external_payment_id VARCHAR(255),
+    donor_name VARCHAR(150),
+    donor_email VARCHAR(150),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
+);
+
+-- 9. Row Level Security (RLS) Policies
 ALTER TABLE page_sections ENABLE ROW LEVEL SECURITY;
 ALTER TABLE news ENABLE ROW LEVEL SECURITY;
 ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
 ALTER TABLE team_members ENABLE ROW LEVEL SECURITY;
 ALTER TABLE contacts_settings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE inbox_messages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE donations ENABLE ROW LEVEL SECURITY;
 
 -- Allow public read access to published content
 CREATE POLICY "Public Read News" ON news FOR SELECT USING (true);
@@ -110,3 +127,7 @@ CREATE POLICY "Admin Full Page Sections" ON page_sections FOR ALL TO authenticat
 CREATE POLICY "Admin Full Team" ON team_members FOR ALL TO authenticated USING (true);
 CREATE POLICY "Admin Full Contacts" ON contacts_settings FOR ALL TO authenticated USING (true);
 CREATE POLICY "Admin Full Inbox" ON inbox_messages FOR ALL TO authenticated USING (true);
+CREATE POLICY "Admin Full Donations" ON donations FOR ALL TO authenticated USING (true);
+
+-- Allow public insert to donations (payment confirmation writes)
+CREATE POLICY "Public Insert Donations" ON donations FOR INSERT WITH CHECK (true);

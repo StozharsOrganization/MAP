@@ -39,7 +39,7 @@ interface AdminContextType {
   // Donations
   isDonationOpen: boolean;
   donationProjectId: string | null;
-  openDonation: (projectId?: string | any) => void;
+  openDonation: (projectId?: string | React.MouseEvent | unknown) => void;
   closeDonation: () => void;
 
   // Volunteers
@@ -160,7 +160,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
     setIsTeamModalOpen(false);
   };
 
-  const openDonation = (projectId?: string | any) => {
+  const openDonation = (projectId?: string | React.MouseEvent | unknown) => {
     if (typeof projectId === 'string') {
       setDonationProjectId(projectId);
     } else {

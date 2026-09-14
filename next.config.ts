@@ -9,8 +9,10 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: '**',
+        hostname: 'i.imgur.com',
       },
+      // Add more trusted domains as needed:
+      // { protocol: 'https', hostname: 'cdn.example.com' },
     ],
   },
 };

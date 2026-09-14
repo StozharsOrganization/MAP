@@ -112,7 +112,7 @@
       "fullDesc": "Академія передбачає 6 навчальних модулів, практичні завдання у реальних громадах та створення власного соціального проєкту за підтримки ментора.",
       "targetAudience": "Молодь віком 16-25 років",
       "dates": "Вересень 2024 - Травень 2025",
-      "raisedAmount": 75000,
+      "raisedAmount": 79500,
       "goalAmount": 100000
     },
     {
@@ -207,6 +207,44 @@
       "id": "msg-1789071657143",
       "createdAt": "2026-09-10T20:20:57.143Z",
       "read": false
+    }
+  ],
+  "donations": [
+    {
+      "id": "4fc6db75-7d82-4b16-9834-024848b30c1d",
+      "projectId": "proj-1",
+      "amount": 500,
+      "frequency": "once",
+      "paymentMethod": "mono",
+      "donorName": "Анонімний благодійник",
+      "createdAt": "2026-09-14T19:07:43.673Z"
+    },
+    {
+      "id": "236c4364-da1a-44d6-b5ef-64b3753f5928",
+      "projectId": "proj-1",
+      "amount": 500,
+      "frequency": "once",
+      "paymentMethod": "mono",
+      "donorName": "Анонімний благодійник",
+      "createdAt": "2026-09-14T19:07:30.808Z"
+    },
+    {
+      "id": "136ca84e-f45f-43f3-acf2-762534e930b4",
+      "projectId": "proj-1",
+      "amount": 500,
+      "frequency": "once",
+      "paymentMethod": "mono",
+      "donorName": "Анонімний благодійник",
+      "createdAt": "2026-09-14T19:07:19.987Z"
+    },
+    {
+      "id": "1421f548-64ec-456f-bff0-e315d5791c7a",
+      "projectId": "proj-1",
+      "amount": 500,
+      "frequency": "once",
+      "paymentMethod": "mono",
+      "donorName": "Анонімний благодійник",
+      "createdAt": "2026-09-14T18:53:41.445Z"
     }
   ]
 }

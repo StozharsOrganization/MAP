@@ -12,42 +12,63 @@ export interface AdminSessionUser {
 }
 
 export interface AdminAccount {
-  password: string;
+  password: string | undefined;
   name: string;
   role: AdminRole;
   description: string;
 }
 
-// Predefined accounts with role-based access control (RBAC)
-export const ACCOUNTS: Record<string, AdminAccount> = {
-  admin: {
-    password: process.env.ADMIN_PASSWORD || 'map_admin_2026!',
-    name: 'Головний адміністратор',
-    role: 'admin',
-    description: 'Повний доступ до всіх розділів, налаштувань та фінансів',
-  },
-  map_admin: {
-    password: process.env.ADMIN_PASSWORD || 'map_admin_2026!',
-    name: 'Головний адміністратор MAP',
-    role: 'admin',
-    description: 'Повний доступ до всіх розділів, налаштувань та фінансів',
-  },
-  editor: {
-    password: process.env.EDITOR_PASSWORD || 'editor_2026!',
-    name: 'Редактор контенту',
-    role: 'editor',
-    description: 'Створення та редагування новин, проєктів та команди',
-  },
-  coordinator: {
-    password: process.env.COORDINATOR_PASSWORD || 'coord_2026!',
-    name: 'Координатор програм',
-    role: 'coordinator',
-    description: 'Робота із заявками волонтерів та вхідними зверненнями',
-  },
-};
+/**
+ * Predefined accounts with role-based access control (RBAC).
+ * Passwords MUST be set via environment variables — no hardcoded fallbacks.
+ * If an env variable is missing, the account is disabled (login will fail).
+ */
+function getAccounts(): Record<string, AdminAccount> {
+  return {
+    admin: {
+      password: process.env.ADMIN_PASSWORD,
+      name: 'Головний адміністратор',
+      role: 'admin',
+      description: 'Повний доступ до всіх розділів, налаштувань та фінансів',
+    },
+    map_admin: {
+      password: process.env.ADMIN_PASSWORD,
+      name: 'Головний адміністратор MAP',
+      role: 'admin',
+      description: 'Повний доступ до всіх розділів, налаштувань та фінансів',
+    },
+    editor: {
+      password: process.env.EDITOR_PASSWORD,
+      name: 'Редактор контенту',
+      role: 'editor',
+      description: 'Створення та редагування новин, проєктів та команди',
+    },
+    coordinator: {
+      password: process.env.COORDINATOR_PASSWORD,
+      name: 'Координатор програм',
+      role: 'coordinator',
+      description: 'Робота із заявками волонтерів та вхідними зверненнями',
+    },
+  };
+}
 
 function getSecretKey(): string {
-  return process.env.SESSION_SECRET || 'map-ngo-super-secret-key-2026-secure-rbac';
+  const secret = process.env.SESSION_SECRET;
+  if (!secret) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error(
+        'CRITICAL: SESSION_SECRET environment variable is not set. ' +
+        'Set a cryptographically strong secret (≥32 characters) before deploying to production.'
+      );
+    }
+    // Development fallback — warn loudly
+    console.warn(
+      '⚠️  SESSION_SECRET is not set — using insecure development fallback. ' +
+      'Set SESSION_SECRET in .env.local for proper security.'
+    );
+    return 'dev-only-insecure-fallback-key-do-not-use-in-prod';
+  }
+  return secret;
 }
 
 /**
@@ -56,8 +77,9 @@ function getSecretKey(): string {
 export function verifyCredentials(username: string, password: string): AdminSessionUser | null {
   if (!username || !password) return null;
   const cleanUsername = username.trim().toLowerCase();
-  const account = ACCOUNTS[cleanUsername];
-  if (!account) return null;
+  const accounts = getAccounts();
+  const account = accounts[cleanUsername];
+  if (!account || !account.password) return null; // Account disabled if no password in env
 
   try {
     const isMatch = crypto.timingSafeEqual(

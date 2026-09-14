@@ -119,11 +119,12 @@ export default function DonationModal() {
     setIsSubmitting(true);
     try {
       const projId = selectedProject !== 'general' ? selectedProject : undefined;
-      const res = await fetch('/api/donate', {
+      const res = await fetch('/api/payments/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           projectId: projId,
+          projectTitle: selectedProject !== 'general' ? projectsList.find((p) => p.id === selectedProject)?.title : undefined,
           amount: currentSumNum,
           frequency,
           paymentMethod,
@@ -134,6 +135,11 @@ export default function DonationModal() {
 
       const data = await res.json();
       if (data.success) {
+        if (data.checkoutUrl) {
+          window.location.href = data.checkoutUrl;
+          return;
+        }
+
         // Real-time reactive update event for all project cards on screen
         window.dispatchEvent(
           new CustomEvent('map:donation', {

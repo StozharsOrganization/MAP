@@ -5,12 +5,8 @@ import { AdminProvider } from '../context/AdminContext';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import AdminBar from '../components/AdminBar';
-import CreateNewsModal from '../components/modals/CreateNewsModal';
-import ProjectModal from '../components/modals/ProjectModal';
-import TeamModal from '../components/modals/TeamModal';
-import DonationModal from '../components/modals/DonationModal';
-import VolunteerModal from '../components/modals/VolunteerModal';
-import AdminLoginModal from '../components/modals/AdminLoginModal';
+
+import ModalsContainer from '../components/modals/ModalsContainer';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://map.org.ua';
 
@@ -150,12 +146,7 @@ export default function RootLayout({
             <main className="flex-1">{children}</main>
             <Footer />
             <AdminBar />
-            <AdminLoginModal />
-            <CreateNewsModal />
-            <ProjectModal />
-            <TeamModal />
-            <DonationModal />
-            <VolunteerModal />
+            <ModalsContainer />
           </AdminProvider>
         </ThemeProvider>
       </body>

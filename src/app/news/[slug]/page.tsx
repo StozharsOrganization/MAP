@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { getDatabase } from '../../../lib/data/store';
 import SingleNewsClient from './SingleNewsClient';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 interface PageProps {
   params: Promise<{ slug: string }>;

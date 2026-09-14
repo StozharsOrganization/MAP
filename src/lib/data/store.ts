@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
+import crypto from 'crypto';
 import { initialData } from './initialData';
 import { getPgPool, isPgConnected } from './pgClient';
 import {
@@ -252,8 +253,8 @@ export async function updateAboutStory(aboutUpdates: Partial<MapDatabase['aboutS
 
 // News
 export async function addNews(item: Omit<NewsItem, 'id' | 'slug'>): Promise<NewsItem> {
-  const slug = generateSlug(item.title) + '-' + Math.random().toString(36).substring(2, 6);
-  const id = 'news-' + Date.now();
+  const slug = generateSlug(item.title) + '-' + crypto.randomUUID().slice(0, 8);
+  const id = crypto.randomUUID();
   const newItem: NewsItem = { ...item, id, slug };
 
   const pgConnected = await isPgConnected();
@@ -373,8 +374,8 @@ export async function deleteNews(id: string): Promise<boolean> {
 
 // Projects
 export async function addProject(project: Omit<ProjectItem, 'id' | 'slug'>): Promise<ProjectItem> {
-  const slug = generateSlug(project.title) + '-' + Math.random().toString(36).substring(2, 6);
-  const id = 'proj-' + Date.now();
+  const slug = generateSlug(project.title) + '-' + crypto.randomUUID().slice(0, 8);
+  const id = crypto.randomUUID();
   const newProj: ProjectItem = { ...project, id, slug };
 
   const pgConnected = await isPgConnected();
@@ -506,7 +507,7 @@ export async function deleteProject(id: string): Promise<boolean> {
 
 // Team
 export async function addTeamMember(member: Omit<TeamMember, 'id'>): Promise<TeamMember> {
-  const id = 'team-' + Date.now();
+  const id = crypto.randomUUID();
   const newMember: TeamMember = { ...member, id };
 
   const pgConnected = await isPgConnected();
@@ -647,7 +648,7 @@ export async function updateContacts(updates: Partial<ContactInfo>): Promise<Con
 
 // Inbox
 export async function addInboxMessage(msg: Omit<InboxMessage, 'id' | 'createdAt' | 'read'>): Promise<InboxMessage> {
-  const id = 'msg-' + Date.now();
+  const id = crypto.randomUUID();
   const newMsg: InboxMessage = {
     ...msg,
     id,
@@ -696,7 +697,7 @@ export async function donateToProject(params: {
   donorEmail?: string;
 }): Promise<{ project: ProjectItem | null; newRaisedAmount: number; donation: DonationRecord }> {
   const donation: DonationRecord = {
-    id: 'don-' + Date.now() + '-' + Math.random().toString(36).substring(2, 6),
+    id: crypto.randomUUID(),
     projectId: params.projectId,
     amount: Number(params.amount),
     frequency: params.frequency || 'once',
@@ -711,19 +712,6 @@ export async function donateToProject(params: {
 
   if (pgConnected && pool) {
     try {
-      await pool.query(`
-        CREATE TABLE IF NOT EXISTS donations (
-          id VARCHAR(100) PRIMARY KEY,
-          project_id VARCHAR(100),
-          amount NUMERIC NOT NULL,
-          frequency VARCHAR(20) DEFAULT 'once',
-          payment_method VARCHAR(50),
-          donor_name VARCHAR(150),
-          donor_email VARCHAR(150),
-          created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
-        )
-      `);
-
       await pool.query(
         `INSERT INTO donations (id, project_id, amount, frequency, payment_method, donor_name, donor_email)
          VALUES ($1, $2, $3, $4, $5, $6, $7)`,
