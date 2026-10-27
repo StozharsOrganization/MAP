@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useAdmin } from '../../context/AdminContext';
-import { useTranslation, getTranslatedContacts } from '../../lib/translations';
-import { ContactInfo } from '../../lib/types';
-import { updateContactsAction, submitContactFormAction } from '../../lib/actions/contentActions';
+import { useAdmin } from '../../../context/AdminContext';
+import { useTranslation, getTranslatedContacts } from '../../../lib/translations';
+import { ContactInfo } from '../../../lib/types';
+import { updateContactsAction, submitContactFormAction } from '../../../lib/actions/contentActions';
 import {
   Phone,
   Mail,
@@ -17,7 +17,7 @@ import {
   Sparkles,
   Loader2
 } from 'lucide-react';
-import { InstagramIcon, FacebookIcon, LinkedinIcon, YoutubeIcon } from '../../components/icons/BrandIcons';
+import { InstagramIcon, FacebookIcon, LinkedinIcon, YoutubeIcon } from '../../../components/icons/BrandIcons';
 
 interface ContactsClientProps {
   initialContacts: ContactInfo;

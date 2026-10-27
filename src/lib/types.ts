@@ -1,5 +1,5 @@
 export interface PageSectionContent {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface HeroContent {

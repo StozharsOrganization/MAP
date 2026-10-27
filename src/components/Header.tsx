@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
+import { stripLocale } from '../lib/i18n';
+import Link from './LocaleLink';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useAdmin } from '../context/AdminContext';
@@ -43,7 +44,7 @@ export default function Header() {
         {/* Center: Desktop Navigation Links */}
         <nav className="hidden md:flex items-center gap-1 lg:gap-2">
           {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+            const isActive = stripLocale(pathname || '/') === link.href;
             return (
               <Link
                 key={link.href}
@@ -151,7 +152,7 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-white/10 bg-[#081626] px-4 pt-2 pb-6 space-y-2 shadow-2xl animate-in slide-in-from-top-2">
           {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+            const isActive = stripLocale(pathname || '/') === link.href;
             return (
               <Link
                 key={link.href}

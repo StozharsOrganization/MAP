@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { donateToProject, getDonations } from '../../../lib/data/store';
 import { verifyAdminSession } from '../../../lib/auth';
-import { revalidatePath } from 'next/cache';
+import { revalidateLocalized } from '../../../lib/revalidate';
 import { checkRateLimit, getClientIp } from '../../../lib/rateLimit';
 
 // Rate limit: 10 donations per 5 minutes per IP
@@ -9,6 +9,16 @@ const DONATE_RATE_LIMIT = { maxRequests: 10, windowMs: 5 * 60 * 1000 };
 
 export async function POST(req: NextRequest) {
   try {
+    // Manual donation entry (offline/bank transfers) — admin only.
+    // Public donations must go through /api/payments/create.
+    const isAuthorized = await verifyAdminSession(['admin']);
+    if (!isAuthorized) {
+      return NextResponse.json(
+        { success: false, error: 'Unauthorized: Ручне внесення донатів доступне лише адміністратору' },
+        { status: 403 }
+      );
+    }
+
     // Rate limiting
     const ip = getClientIp(req.headers);
     const rateLimitResult = checkRateLimit(`donate:${ip}`, DONATE_RATE_LIMIT);
@@ -51,8 +61,8 @@ export async function POST(req: NextRequest) {
       donorEmail,
     });
 
-    revalidatePath('/');
-    revalidatePath('/projects');
+    revalidateLocalized('/');
+    revalidateLocalized('/projects');
 
     return NextResponse.json({
       success: true,

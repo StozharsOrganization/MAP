@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
+import Link from '../LocaleLink';
 import { useAdmin } from '../../context/AdminContext';
-import { useTranslation } from '../../lib/translations';
+import { useTranslation, useL } from '../../lib/translations';
 import { submitContactFormAction } from '../../lib/actions/contentActions';
 import { X, Sparkles, CheckCircle, Loader2, Compass, ShieldCheck } from 'lucide-react';
 
@@ -16,9 +16,19 @@ const VOLUNTEER_DIRECTIONS = [
   '🤝 Соціальна адаптація та підтримка молоді ВПО'
 ];
 
+const VOLUNTEER_DIRECTIONS_EN = [
+  '📱 SMM, content and graphic design',
+  '🎪 Youth events and logistics',
+  '🎓 Facilitation, mentoring and non-formal education',
+  '🌍 International exchanges (Erasmus+) and translation',
+  '💻 IT, web development and digital technology',
+  '🤝 Social adaptation and support for IDP youth'
+];
+
 export default function VolunteerModal() {
   const { isVolunteerOpen, closeVolunteer } = useAdmin();
   const { t } = useTranslation();
+  const L = useL();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -78,7 +88,7 @@ export default function VolunteerModal() {
           </div>
           <h3 className="text-xl font-bold">{t.volunteerModal.title}</h3>
           <p className="text-xs text-slate-300 mt-1">
-            Приєднуйтесь до команди MAP у 14 містах України або долучайтеся до онлайн-проєктів.
+            {L('Приєднуйтесь до команди MAP у 14 містах України або долучайтеся до онлайн-проєктів.', 'Join the MAP team in 14 Ukrainian cities or take part in our online projects.')}
           </p>
         </div>
 
@@ -87,7 +97,7 @@ export default function VolunteerModal() {
             <CheckCircle className="w-14 h-14 text-emerald-400 mx-auto animate-bounce" />
             <h4 className="text-lg font-bold text-white">{t.volunteerModal.successTitle}</h4>
             <p className="text-sm text-slate-300">
-              Дякуємо за ваше прагнення творити зміни! Координатор волонтерських програм MAP зв'яжеться з вами найближчим часом.
+              {L('Дякуємо за ваше прагнення творити зміни! Координатор волонтерських програм MAP зв’яжеться з вами найближчим часом.', 'Thank you for wanting to make a difference! The MAP volunteer coordinator will contact you shortly.')}
             </p>
           </div>
         ) : (
@@ -122,7 +132,7 @@ export default function VolunteerModal() {
                   type="text"
                   value={phone}
                   onChange={e => setPhone(e.target.value)}
-                  placeholder="@username або телефон"
+                  placeholder={L('@username або телефон', '@username or phone')}
                   className="w-full px-3 py-2 text-xs rounded-xl border border-white/15 bg-[#081626] text-white placeholder-slate-500 focus:ring-2 focus:ring-sky-400 focus:outline-none"
                 />
               </div>
@@ -142,16 +152,16 @@ export default function VolunteerModal() {
 
               <div>
                 <label className="block text-xs font-semibold text-slate-300 mb-1">
-                  Напрям волонтерства
+                  {L('Напрям волонтерства', 'Volunteering area')}
                 </label>
                 <select
                   value={direction}
                   onChange={e => setDirection(e.target.value)}
                   className="w-full px-3 py-2 text-xs rounded-xl border border-white/15 bg-[#081626] text-white focus:ring-2 focus:ring-sky-400 focus:outline-none cursor-pointer"
                 >
-                  {VOLUNTEER_DIRECTIONS.map(dir => (
+                  {VOLUNTEER_DIRECTIONS.map((dir, i) => (
                     <option key={dir} value={dir} className="bg-[#081626] text-white">
-                      {dir}
+                      {L(dir, VOLUNTEER_DIRECTIONS_EN[i])}
                     </option>
                   ))}
                 </select>
@@ -181,9 +191,9 @@ export default function VolunteerModal() {
                 className="mt-0.5 rounded border-white/20 bg-[#081626] text-sky-500 focus:ring-sky-400 cursor-pointer"
               />
               <label htmlFor="gdpr-consent" className="cursor-pointer select-none">
-                Я даю згоду на обробку моїх персональних даних відповідно до{' '}
+                {L('Я даю згоду на обробку моїх персональних даних відповідно до', 'I consent to the processing of my personal data in accordance with the')}{' '}
                 <Link href="/privacy-policy" target="_blank" className="text-sky-400 underline hover:text-sky-300">
-                  Політики конфіденційності
+                  {L('Політики конфіденційності', 'Privacy Policy')}
                 </Link>.
               </label>
             </div>

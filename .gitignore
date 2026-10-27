@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local data (contains inbox messages / donor info)
+/data/map_database.json
+
+# Visual Studio
+.vs/

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
-import Link from 'next/link';
+import Link from './LocaleLink';
 import Image from 'next/image';
 import { useAdmin } from '../context/AdminContext';
 import { useTranslation } from '../lib/translations';

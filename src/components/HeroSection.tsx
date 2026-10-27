@@ -64,7 +64,7 @@ export default function HeroSection({ initialHero }: HeroSectionProps) {
   };
 
   return (
-    <section className="relative text-white overflow-hidden min-h-[560px] lg:min-h-[640px] flex items-center pt-16 pb-20 border-b border-white/10">
+    <section className="on-image relative text-white overflow-hidden min-h-[560px] lg:min-h-[640px] flex items-center pt-16 pb-20 border-b border-white/10">
       {/* Background image: Молодь організації MAP */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img
@@ -75,7 +75,7 @@ export default function HeroSection({ initialHero }: HeroSectionProps) {
         {/* Lighter, softer gradient overlay so the image is clear and bright */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#081626]/75 via-[#081626]/40 to-black/20" />
         {/* Soft bottom blend into the next section */}
-        <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-[#081626] to-transparent" />
+        <div className="hero-fade absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-[#081626] to-transparent" />
       </div>
 
       {/* Admin camera button to change background photo */}

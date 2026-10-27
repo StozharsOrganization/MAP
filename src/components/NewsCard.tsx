@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
+import Link from './LocaleLink';
 import { useAdmin } from '../context/AdminContext';
 import { useTranslation, getTranslatedNews } from '../lib/translations';
 import { NewsItem } from '../lib/types';

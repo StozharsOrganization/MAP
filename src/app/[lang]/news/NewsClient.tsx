@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useAdmin } from '../../context/AdminContext';
-import { useTranslation, getTranslatedNews } from '../../lib/translations';
-import { NewsItem } from '../../lib/types';
-import NewsCard from '../../components/NewsCard';
+import { useAdmin } from '../../../context/AdminContext';
+import { useTranslation, getTranslatedNews } from '../../../lib/translations';
+import { NewsItem } from '../../../lib/types';
+import NewsCard from '../../../components/NewsCard';
 import { Plus, Search, Newspaper, Sparkles } from 'lucide-react';
 
 interface NewsClientProps {

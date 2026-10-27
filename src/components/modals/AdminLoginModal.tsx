@@ -38,7 +38,7 @@ export default function AdminLoginModal() {
       } else {
         setError(data.error || 'Невірний логін або пароль');
       }
-    } catch (err: any) {
+    } catch {
       setError('Не вдалося підключитися до сервера. Спробуйте пізніше.');
     } finally {
       setLoading(false);

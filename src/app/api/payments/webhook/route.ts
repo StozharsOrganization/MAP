@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { paymentService } from '../../../../lib/payments/paymentService';
 import { donateToProject } from '../../../../lib/data/store';
-import { revalidatePath } from 'next/cache';
+import { revalidateLocalized } from '../../../../lib/revalidate';
 
 /**
  * Webhook handler for payment provider callbacks.
@@ -33,8 +33,8 @@ export async function POST(req: NextRequest) {
         paymentMethod: paymentService.getProviderName(),
       });
 
-      revalidatePath('/');
-      revalidatePath('/projects');
+      revalidateLocalized('/');
+      revalidateLocalized('/projects');
     }
 
     return NextResponse.json({ received: true, success: result.success });

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
+import Link from './LocaleLink';
 import { useAdmin } from '../context/AdminContext';
 import { useTranslation, getTranslatedProject } from '../lib/translations';
 import { ProjectItem } from '../lib/types';

@@ -1,4 +1,4 @@
-import { Pool } from 'pg';
+import { Pool, PoolClient } from 'pg';
 
 let pool: Pool | null = null;
 let lastCheckTime = 0;
@@ -16,7 +16,7 @@ export function getPgPool(): Pool | null {
       max: 5,
     });
 
-    pool.on('error', (err) => {
+    pool.on('error', () => {
       // Prevent unhandled error event on the pool instance
       lastCheckResult = false;
     });
@@ -39,13 +39,13 @@ export async function isPgConnected(): Promise<boolean> {
     return false;
   }
 
-  let client: any = null;
+  let client: PoolClient | null = null;
   try {
     client = await p.connect();
     await client.query('SELECT 1');
     lastCheckResult = true;
     return true;
-  } catch (err) {
+  } catch {
     lastCheckResult = false;
     return false;
   } finally {

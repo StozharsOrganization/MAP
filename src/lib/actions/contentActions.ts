@@ -1,7 +1,7 @@
 'use server';
 
 import { z } from 'zod';
-import { revalidatePath } from 'next/cache';
+import { revalidateLocalized } from '../revalidate';
 import * as store from '../data/store';
 import { HeroContent, ImpactStats, NewsItem, ProjectItem, TeamMember, ContactInfo } from '../types';
 import { verifyAdminSession, AdminRole } from '../auth';
@@ -77,6 +77,8 @@ const TeamMemberSchema = z.object({
 // Auth Helper
 // =============================================================================
 
+const CONTENT_ROLES: AdminRole[] = ['admin', 'editor'];
+
 async function requireAdmin(allowedRoles?: AdminRole[]) {
   const isAuth = await verifyAdminSession(allowedRoles);
   if (!isAuth) {
@@ -90,9 +92,9 @@ async function requireAdmin(allowedRoles?: AdminRole[]) {
 
 export async function updateHeroAction(hero: Partial<HeroContent>) {
   try {
-    await requireAdmin();
+    await requireAdmin(CONTENT_ROLES);
     const updated = await store.updateHero(hero);
-    revalidatePath('/');
+    revalidateLocalized('/');
     return { success: true, data: updated };
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Невідома помилка';
@@ -102,9 +104,9 @@ export async function updateHeroAction(hero: Partial<HeroContent>) {
 
 export async function updateStatsAction(stats: Partial<ImpactStats>) {
   try {
-    await requireAdmin();
+    await requireAdmin(CONTENT_ROLES);
     const updated = await store.updateStats(stats);
-    revalidatePath('/');
+    revalidateLocalized('/');
     return { success: true, data: updated };
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Невідома помилка';
@@ -120,10 +122,10 @@ export async function updateAboutStoryAction(about: Partial<{
   values: Array<{ title: string; desc: string; icon: string }>;
 }>) {
   try {
-    await requireAdmin();
+    await requireAdmin(CONTENT_ROLES);
     const updated = await store.updateAboutStory(about);
-    revalidatePath('/who-we-are');
-    revalidatePath('/');
+    revalidateLocalized('/who-we-are');
+    revalidateLocalized('/');
     return { success: true, data: updated };
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Невідома помилка';
@@ -145,7 +147,7 @@ export async function createNewsAction(formData: {
   status?: 'published' | 'draft';
 }) {
   try {
-    await requireAdmin();
+    await requireAdmin(CONTENT_ROLES);
     const validated = CreateNewsSchema.parse(formData);
     const today = new Date();
     const formattedDate = `${String(today.getDate()).padStart(2, '0')}.${String(today.getMonth() + 1).padStart(2, '0')}.${today.getFullYear()}`;
@@ -163,8 +165,8 @@ export async function createNewsAction(formData: {
       views: 1
     });
 
-    revalidatePath('/');
-    revalidatePath('/news');
+    revalidateLocalized('/');
+    revalidateLocalized('/news');
     return { success: true, data: newItem };
   } catch (err: unknown) {
     if (err instanceof z.ZodError) {
@@ -177,12 +179,12 @@ export async function createNewsAction(formData: {
 
 export async function updateNewsAction(id: string, updates: Partial<NewsItem>) {
   try {
-    await requireAdmin();
+    await requireAdmin(CONTENT_ROLES);
     const updated = await store.updateNews(id, updates);
-    revalidatePath('/');
-    revalidatePath('/news');
+    revalidateLocalized('/');
+    revalidateLocalized('/news');
     if (updated) {
-      revalidatePath(`/news/${updated.slug}`);
+      revalidateLocalized(`/news/${updated.slug}`);
     }
     return { success: true, data: updated };
   } catch (err: unknown) {
@@ -193,10 +195,10 @@ export async function updateNewsAction(id: string, updates: Partial<NewsItem>) {
 
 export async function deleteNewsAction(id: string) {
   try {
-    await requireAdmin();
+    await requireAdmin(CONTENT_ROLES);
     const success = await store.deleteNews(id);
-    revalidatePath('/');
-    revalidatePath('/news');
+    revalidateLocalized('/');
+    revalidateLocalized('/news');
     return { success };
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Невідома помилка';
@@ -217,6 +219,7 @@ export async function donateToProjectAction(formData: {
   donorEmail?: string;
 }) {
   try {
+    await requireAdmin(['admin']);
     const validated = DonateSchema.parse(formData);
     const result = await store.donateToProject({
       projectId: validated.projectId,
@@ -227,8 +230,8 @@ export async function donateToProjectAction(formData: {
       donorEmail: validated.donorEmail,
     });
 
-    revalidatePath('/');
-    revalidatePath('/projects');
+    revalidateLocalized('/');
+    revalidateLocalized('/projects');
     return {
       success: true,
       data: result.project,
@@ -257,15 +260,15 @@ export async function createProjectAction(formData: {
   goalAmount?: number;
 }) {
   try {
-    await requireAdmin();
+    await requireAdmin(CONTENT_ROLES);
     const validated = CreateProjectSchema.parse(formData);
     const newProj = await store.addProject({
       ...validated,
       raisedAmount: validated.raisedAmount || 0,
       goalAmount: validated.goalAmount || 100000
     });
-    revalidatePath('/');
-    revalidatePath('/projects');
+    revalidateLocalized('/');
+    revalidateLocalized('/projects');
     return { success: true, data: newProj };
   } catch (err: unknown) {
     if (err instanceof z.ZodError) {
@@ -278,10 +281,10 @@ export async function createProjectAction(formData: {
 
 export async function updateProjectAction(id: string, updates: Partial<ProjectItem>) {
   try {
-    await requireAdmin();
+    await requireAdmin(CONTENT_ROLES);
     const updated = await store.updateProject(id, updates);
-    revalidatePath('/');
-    revalidatePath('/projects');
+    revalidateLocalized('/');
+    revalidateLocalized('/projects');
     return { success: true, data: updated };
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Невідома помилка';
@@ -291,10 +294,10 @@ export async function updateProjectAction(id: string, updates: Partial<ProjectIt
 
 export async function deleteProjectAction(id: string) {
   try {
-    await requireAdmin();
+    await requireAdmin(CONTENT_ROLES);
     const success = await store.deleteProject(id);
-    revalidatePath('/');
-    revalidatePath('/projects');
+    revalidateLocalized('/');
+    revalidateLocalized('/projects');
     return { success };
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Невідома помилка';
@@ -315,7 +318,7 @@ export async function createTeamMemberAction(member: {
   socials?: { linkedin?: string; instagram?: string; email?: string };
 }) {
   try {
-    await requireAdmin();
+    await requireAdmin(CONTENT_ROLES);
     const validated = TeamMemberSchema.parse(member);
     const created = await store.addTeamMember({
       name: validated.name,
@@ -325,7 +328,7 @@ export async function createTeamMemberAction(member: {
       order: validated.order || 99,
       socials: validated.socials
     });
-    revalidatePath('/who-we-are');
+    revalidateLocalized('/who-we-are');
     return { success: true, data: created };
   } catch (err: unknown) {
     if (err instanceof z.ZodError) {
@@ -338,9 +341,9 @@ export async function createTeamMemberAction(member: {
 
 export async function updateTeamMemberAction(id: string, updates: Partial<TeamMember>) {
   try {
-    await requireAdmin();
+    await requireAdmin(CONTENT_ROLES);
     const updated = await store.updateTeamMember(id, updates);
-    revalidatePath('/who-we-are');
+    revalidateLocalized('/who-we-are');
     return { success: true, data: updated };
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Невідома помилка';
@@ -350,9 +353,9 @@ export async function updateTeamMemberAction(id: string, updates: Partial<TeamMe
 
 export async function deleteTeamMemberAction(id: string) {
   try {
-    await requireAdmin();
+    await requireAdmin(CONTENT_ROLES);
     const success = await store.deleteTeamMember(id);
-    revalidatePath('/who-we-are');
+    revalidateLocalized('/who-we-are');
     return { success };
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Невідома помилка';
@@ -366,10 +369,10 @@ export async function deleteTeamMemberAction(id: string) {
 
 export async function updateContactsAction(contacts: Partial<ContactInfo>) {
   try {
-    await requireAdmin();
+    await requireAdmin(['admin']);
     const updated = await store.updateContacts(contacts);
-    revalidatePath('/contacts');
-    revalidatePath('/');
+    revalidateLocalized('/contacts');
+    revalidateLocalized('/');
     return { success: true, data: updated };
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Невідома помилка';

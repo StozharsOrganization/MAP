@@ -1,36 +1,46 @@
 import { notFound } from 'next/navigation';
-import { getDatabase } from '../../../lib/data/store';
+import { pageMetadata, getLang, localizePath, SITE_URL } from '../../../../lib/i18n';
+import { getTranslatedNews } from '../../../../lib/translations';
+import { getDatabase } from '../../../../lib/data/store';
 import SingleNewsClient from './SingleNewsClient';
+import { verifyAdminSession } from '../../../../lib/auth';
 
 export const revalidate = 60;
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; lang: string }>;
 }
 
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
+  const lang = await getLang(params);
   const db = await getDatabase();
-  const newsItem = db.news.find(n => n.slug === slug || n.id === slug);
-  if (!newsItem) return { title: 'Новина не знайдена — MAP' };
+  const raw = db.news.find(n => n.slug === slug || n.id === slug);
+  if (!raw || raw.status === 'draft') {
+    return { title: lang === 'en' ? 'News not found' : 'Новина не знайдена' };
+  }
+  const ua = raw;
+  const en = getTranslatedNews(raw, 'en');
 
-  return {
-    title: `${newsItem.title} — MAP NGO`,
-    description: newsItem.excerpt,
-    openGraph: {
-      title: newsItem.title,
-      description: newsItem.excerpt,
-      images: [newsItem.coverImage],
-    }
-  };
+  return pageMetadata(lang, {
+    path: `/news/${raw.slug || raw.id}`,
+    title: { ua: ua.title, en: en.title },
+    description: { ua: ua.excerpt, en: en.excerpt },
+    image: raw.coverImage,
+  });
 }
 
 export default async function NewsDetailPage({ params }: PageProps) {
   const { slug } = await params;
+  const lang = await getLang(params);
   const db = await getDatabase();
   const newsItem = db.news.find(n => n.slug === slug || n.id === slug);
 
   if (!newsItem) {
+    notFound();
+  }
+
+  if (newsItem.status === 'draft' && !(await verifyAdminSession())) {
     notFound();
   }
 
@@ -42,8 +52,9 @@ export default async function NewsDetailPage({ params }: PageProps) {
   const jsonLdArticle = {
     '@context': 'https://schema.org',
     '@type': 'NewsArticle',
-    headline: newsItem.title,
-    description: newsItem.excerpt,
+    headline: getTranslatedNews(newsItem, lang).title,
+    description: getTranslatedNews(newsItem, lang).excerpt,
+    inLanguage: lang === 'en' ? 'en' : 'uk',
     image: [newsItem.coverImage],
     datePublished: newsItem.date,
     dateModified: newsItem.date,
@@ -62,7 +73,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://map.org.ua/news/${newsItem.slug || newsItem.id}`,
+      '@id': `${SITE_URL}${localizePath(`/news/${newsItem.slug || newsItem.id}`, lang)}`,
     },
   };
 

@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useAdmin } from '../../context/AdminContext';
-import { useTranslation, getTranslatedProject } from '../../lib/translations';
-import { ProjectItem } from '../../lib/types';
-import { deleteProjectAction, updateProjectAction } from '../../lib/actions/contentActions';
-import { formatMoney } from '../../lib/utils';
+import { useAdmin } from '../../../context/AdminContext';
+import { useTranslation, getTranslatedProject } from '../../../lib/translations';
+import { ProjectItem } from '../../../lib/types';
+import { deleteProjectAction, updateProjectAction } from '../../../lib/actions/contentActions';
+import { formatMoney } from '../../../lib/utils';
 import { Plus, Edit2, Trash2, Clock, CheckCircle2, Search, Heart, Sparkles, FolderKanban } from 'lucide-react';
 
 interface ProjectsClientProps {

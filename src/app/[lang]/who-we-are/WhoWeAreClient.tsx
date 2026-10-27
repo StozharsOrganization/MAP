@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useAdmin } from '../../context/AdminContext';
-import { useTranslation, getTranslatedStory, getTranslatedTeamMember } from '../../lib/translations';
-import { TeamMember } from '../../lib/types';
-import { deleteTeamMemberAction, updateAboutStoryAction } from '../../lib/actions/contentActions';
+import { useAdmin } from '../../../context/AdminContext';
+import { useTranslation, getTranslatedStory, getTranslatedTeamMember } from '../../../lib/translations';
+import { TeamMember } from '../../../lib/types';
+import { deleteTeamMemberAction, updateAboutStoryAction } from '../../../lib/actions/contentActions';
 import { Users, UserPlus, Edit2, Trash2, Mail, Sparkles, Check, Edit3, HeartHandshake } from 'lucide-react';
-import { LinkedinIcon } from '../../components/icons/BrandIcons';
+import { LinkedinIcon } from '../../../components/icons/BrandIcons';
 
 interface WhoWeAreClientProps {
   initialStory: any;

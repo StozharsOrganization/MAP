@@ -8,9 +8,9 @@ export async function GET() {
       success: true,
       projects: db.projects || [],
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     return NextResponse.json(
-      { success: false, error: err.message },
+      { success: false, error: err instanceof Error ? err.message : 'Невідома помилка' },
       { status: 500 }
     );
   }

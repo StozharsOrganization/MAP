@@ -3,7 +3,7 @@ import { getDatabase } from '../../../lib/data/store';
 import { verifyAdminSession } from '../../../lib/auth';
 
 export async function GET() {
-  const isAdmin = await verifyAdminSession();
+  const isAdmin = await verifyAdminSession(['admin', 'coordinator', 'editor']);
   if (!isAdmin) {
     return NextResponse.json(
       { success: false, error: 'Unauthorized: Потрібна авторизація адміністратора' },

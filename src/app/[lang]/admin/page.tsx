@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
+import Link from '../../../components/LocaleLink';
 import { useRouter } from 'next/navigation';
-import { useAdmin } from '../../context/AdminContext';
+import { useAdmin } from '../../../context/AdminContext';
 import { Shield, Lock, User, Eye, EyeOff, KeyRound, AlertCircle, ArrowLeft, LogOut, CheckCircle2 } from 'lucide-react';
 
 export default function AdminPage() {

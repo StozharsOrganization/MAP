@@ -327,3 +327,82 @@ html.light .md\:hidden.bg-\[\#081626\] a:hover {
   color: #0f172a !important;
 }
 
+
+/* Text over photos (hero) stays light in both themes — the photo is always dark-overlaid */
+html.light .on-image h1.text-white,
+html.light .on-image .text-white {
+  color: #ffffff !important;
+}
+html.light .on-image p.text-slate-100,
+html.light .on-image p.text-slate-200,
+html.light .on-image p.text-slate-300 {
+  color: #f1f5f9 !important;
+}
+html.light .on-image .text-sky-200,
+html.light .on-image .text-sky-300 {
+  color: #bae6fd !important;
+}
+html.light .on-image .border-white\/10,
+html.light .on-image .border-white\/15,
+html.light .on-image .border-white\/20 {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+html.light .on-image input,
+html.light .on-image textarea {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  color: #ffffff !important;
+}
+/* No bottom fade over the hero photo in light theme (dark theme keeps its navy fade) */
+html.light .on-image .hero-fade {
+  display: none !important;
+}
+html.light .on-image .bg-\[\#081626\]\/90 {
+  background-color: rgba(8, 22, 38, 0.9) !important;
+}
+
+/* ---- Light theme contrast fixes ---- */
+/* Generic light-on-dark text that otherwise disappears on white surfaces */
+html.light ul.text-slate-300,
+html.light ul.text-slate-300 a,
+html.light button.text-slate-300,
+html.light a.text-slate-300 {
+  color: #475569 !important;
+}
+html.light ul.text-slate-300 a:hover,
+html.light button.text-slate-300:hover {
+  color: #3b7da5 !important;
+}
+/* Footer social buttons */
+html.light a.bg-white\/5 {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+}
+html.light a.bg-white\/5:hover {
+  background-color: #3b7da5 !important;
+  color: #ffffff !important;
+}
+/* Mobile menu (hamburger) button */
+html.light header button.text-slate-300:hover {
+  background-color: #e2e8f0 !important;
+}
+/* News card hashtag */
+html.light .text-sky-300\/90 {
+  color: #0284c7 !important;
+}
+/* Amber accents (badges) */
+html.light .text-amber-300 {
+  color: #b45309 !important;
+}
+html.light .bg-amber-500\/15 {
+  background-color: #fef3c7 !important;
+}
+/* Badges placed over photos keep their own light text */
+html.light .bg-slate-700.text-slate-200,
+html.light .bg-slate-700 .text-slate-200,
+html.light .bg-slate-700 span {
+  color: #e2e8f0 !important;
+}
+/* Hero sparkle icon over the photo stays light */
+html.light .on-image .text-amber-300 {
+  color: #fcd34d !important;
+}

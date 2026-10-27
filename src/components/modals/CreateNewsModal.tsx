@@ -273,7 +273,7 @@ export default function CreateNewsModal() {
               <label className="block text-xs font-semibold text-slate-300 mb-1">Статус</label>
               <select
                 value={status}
-                onChange={e => setStatus(e.target.value as any)}
+                onChange={e => setStatus(e.target.value as typeof status)}
                 className="w-full px-3 py-1.5 text-xs rounded-lg border border-white/15 bg-[#081626] text-slate-200 font-medium"
               >
                 <option value="published" className="bg-[#081626] text-white">Опубліковано</option>

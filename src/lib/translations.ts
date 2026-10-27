@@ -689,3 +689,11 @@ export function getTranslatedContacts(contacts: ContactInfo, lang: Language): Co
   };
 }
 
+
+export type LFn = (ua: string, en: string) => string;
+
+/** Inline bilingual helper: L('Текст', 'Text') */
+export function useL(): LFn {
+  const { language } = useAdmin();
+  return (ua: string, en: string) => (language === 'en' ? en : ua);
+}

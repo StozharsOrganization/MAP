@@ -27,16 +27,16 @@ async function ensureFileDb(): Promise<MapDatabase> {
     try {
       const content = await fs.readFile(DB_FILE, 'utf-8');
       const parsed = JSON.parse(content);
-      memoryCache = { ...initialData, ...parsed };
+      memoryCache = { ...structuredClone(initialData), ...parsed };
       return memoryCache!;
     } catch {
       await fs.writeFile(DB_FILE, JSON.stringify(initialData, null, 2), 'utf-8');
-      memoryCache = { ...initialData };
+      memoryCache = structuredClone(initialData);
       return memoryCache;
     }
   } catch (error) {
     console.error('Error ensuring file DB:', error);
-    if (!memoryCache) memoryCache = { ...initialData };
+    if (!memoryCache) memoryCache = structuredClone(initialData);
     return memoryCache;
   }
 }

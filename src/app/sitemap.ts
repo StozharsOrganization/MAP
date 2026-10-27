@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { getDatabase } from '../lib/data/store';
+import { LOCALES, SITE_URL, localizePath } from '../lib/i18n';
 
 function parseSafeDate(dateStr?: string): Date {
   if (!dateStr) return new Date();
@@ -13,62 +14,41 @@ function parseSafeDate(dateStr?: string): Date {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://map.org.ua';
   const db = await getDatabase();
 
+  // Every page is listed once per language, each entry carrying hreflang alternates
+  const entry = (
+    path: string,
+    changeFrequency: NonNullable<MetadataRoute.Sitemap[number]['changeFrequency']>,
+    priority: number,
+    lastModified: Date = new Date()
+  ): MetadataRoute.Sitemap =>
+    LOCALES.map((lang) => ({
+      url: `${SITE_URL}${localizePath(path, lang)}`,
+      lastModified,
+      changeFrequency,
+      priority,
+      alternates: {
+        languages: {
+          uk: `${SITE_URL}${localizePath(path, 'ua')}`,
+          en: `${SITE_URL}${localizePath(path, 'en')}`,
+        },
+      },
+    }));
+
   const staticPages: MetadataRoute.Sitemap = [
-    {
-      url: `${baseUrl}`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1.0,
-    },
-    {
-      url: `${baseUrl}/who-we-are`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/projects`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/news`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/reports`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/contacts`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/privacy-policy`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.3,
-    },
+    ...entry('/', 'daily', 1.0),
+    ...entry('/who-we-are', 'monthly', 0.9),
+    ...entry('/projects', 'weekly', 0.9),
+    ...entry('/news', 'daily', 0.8),
+    ...entry('/reports', 'monthly', 0.7),
+    ...entry('/contacts', 'monthly', 0.7),
+    ...entry('/privacy-policy', 'yearly', 0.3),
   ];
 
   const newsPages: MetadataRoute.Sitemap = db.news
     .filter((item) => item.status === 'published')
-    .map((item) => ({
-      url: `${baseUrl}/news/${item.slug || item.id}`,
-      lastModified: parseSafeDate(item.date),
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    }));
+    .flatMap((item) => entry(`/news/${item.slug || item.id}`, 'weekly', 0.8, parseSafeDate(item.date)));
 
   return [...staticPages, ...newsPages];
 }

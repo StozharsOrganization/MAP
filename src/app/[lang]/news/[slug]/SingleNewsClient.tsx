@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
-import { useAdmin } from '../../../context/AdminContext';
-import { useTranslation, getTranslatedNews } from '../../../lib/translations';
-import { NewsItem } from '../../../lib/types';
-import { updateNewsAction, deleteNewsAction } from '../../../lib/actions/contentActions';
-import NewsCard from '../../../components/NewsCard';
+import Link from '../../../../components/LocaleLink';
+import { useAdmin } from '../../../../context/AdminContext';
+import { useTranslation, getTranslatedNews } from '../../../../lib/translations';
+import { NewsItem } from '../../../../lib/types';
+import { updateNewsAction, deleteNewsAction } from '../../../../lib/actions/contentActions';
+import NewsCard from '../../../../components/NewsCard';
 import {
   ArrowLeft,
   Calendar,
@@ -22,7 +22,7 @@ import {
   Eye,
   Link as LinkIcon
 } from 'lucide-react';
-import { YoutubeIcon } from '../../../components/icons/BrandIcons';
+import { YoutubeIcon } from '../../../../components/icons/BrandIcons';
 
 interface SingleNewsClientProps {
   newsItem: NewsItem;
@@ -212,7 +212,7 @@ export default function SingleNewsClient({ newsItem, relatedNews }: SingleNewsCl
                 <span className="text-xs font-semibold text-slate-300">{t.singleNews.statusLabel}</span>
                 <select
                   value={status}
-                  onChange={e => setStatus(e.target.value as any)}
+                  onChange={e => setStatus(e.target.value as typeof status)}
                   className="text-xs p-2 rounded-lg border border-white/20 bg-[#081626] text-white"
                 >
                   <option value="published">{t.singleNews.statusPublished}</option>

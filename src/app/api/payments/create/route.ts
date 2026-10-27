@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { paymentService } from '../../../../lib/payments/paymentService';
 import { donateToProject } from '../../../../lib/data/store';
 import { checkRateLimit, getClientIp } from '../../../../lib/rateLimit';
-import { revalidatePath } from 'next/cache';
+import { revalidateLocalized } from '../../../../lib/revalidate';
 import type { PaymentCurrency, PaymentFrequency } from '../../../../lib/payments/types';
 
 // Rate limit: 10 payment creations per 5 minutes per IP
@@ -57,12 +57,13 @@ export async function POST(req: NextRequest) {
         donorEmail,
       });
 
-      revalidatePath('/');
-      revalidatePath('/projects');
+      revalidateLocalized('/');
+      revalidateLocalized('/projects');
 
       return NextResponse.json({
         success: true,
         mode: paymentService.getProviderName(),
+        paymentId: intent.externalId || intent.id,
         project: result.project,
         newRaisedAmount: result.newRaisedAmount,
         donation: result.donation,

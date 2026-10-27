@@ -1,11 +1,11 @@
-import { getDatabase } from '../lib/data/store';
-import HeroSection from '../components/HeroSection';
-import MissionSection from '../components/MissionSection';
-import StatsSection from '../components/StatsSection';
-import HomeProjectsSection from '../components/HomeProjectsSection';
-import HomeNewsSection from '../components/HomeNewsSection';
-import TestimonialsSection from '../components/TestimonialsSection';
-import PartnersSection from '../components/PartnersSection';
+import { getDatabase } from '../../lib/data/store';
+import HeroSection from '../../components/HeroSection';
+import MissionSection from '../../components/MissionSection';
+import StatsSection from '../../components/StatsSection';
+import HomeProjectsSection from '../../components/HomeProjectsSection';
+import HomeNewsSection from '../../components/HomeNewsSection';
+import TestimonialsSection from '../../components/TestimonialsSection';
+import PartnersSection from '../../components/PartnersSection';
 
 // ISR: Cache page for 60s, revalidatePath() in actions provides instant updates on content edit
 export const revalidate = 60;
@@ -28,7 +28,7 @@ export default async function HomePage() {
       <HomeProjectsSection projects={db.projects} />
 
       {/* 5. News & Announcements */}
-      <HomeNewsSection news={db.news} />
+      <HomeNewsSection news={db.news.filter(n => n.status === 'published')} />
 
       {/* 6. Alumni & Participant Stories (Social Proof) */}
       <TestimonialsSection />

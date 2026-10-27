@@ -1,6 +1,8 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { localizePath, type Locale } from '../lib/i18n';
 import { NewsItem, ProjectItem, TeamMember } from '../lib/types';
 import { AdminRole, AdminSessionUser } from '../lib/auth';
 
@@ -54,7 +56,13 @@ interface AdminContextType {
 
 const AdminContext = createContext<AdminContextType | undefined>(undefined);
 
-export function AdminProvider({ children }: { children: React.ReactNode }) {
+export function AdminProvider({
+  children,
+  initialLanguage = 'ua',
+}: {
+  children: React.ReactNode;
+  initialLanguage?: Locale;
+}) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [currentUser, setCurrentUser] = useState<AdminSessionUser | null>(null);
   const [isAdminLoginOpen, setIsAdminLoginOpen] = useState(false);
@@ -71,7 +79,10 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
   const [isDonationOpen, setIsDonationOpen] = useState(false);
   const [donationProjectId, setDonationProjectId] = useState<string | null>(null);
   const [isVolunteerOpen, setIsVolunteerOpen] = useState(false);
-  const [language, setLanguage] = useState<'ua' | 'en'>('ua');
+  // Language comes from the URL (/en/... = English, everything else = Ukrainian)
+  const language: Locale = initialLanguage;
+  const router = useRouter();
+  const pathname = usePathname();
 
   // Role permissions checker
   const can = (action: 'content' | 'finances' | 'inbox'): boolean => {
@@ -100,15 +111,11 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
         setCurrentUser(null);
       });
 
-    const savedLang = localStorage.getItem('map_language');
-    if (savedLang === 'en' || savedLang === 'ua') {
-      setLanguage(savedLang);
-    }
   }, []);
 
   const handleSetLanguage = (lang: 'ua' | 'en') => {
-    setLanguage(lang);
-    localStorage.setItem('map_language', lang);
+    if (lang === language) return;
+    router.push(localizePath(pathname || '/', lang));
   };
 
   const openAdminLogin = () => setIsAdminLoginOpen(true);
