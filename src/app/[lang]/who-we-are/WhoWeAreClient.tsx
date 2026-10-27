@@ -213,6 +213,7 @@ export default function WhoWeAreClient({ initialStory, initialTeam }: WhoWeAreCl
                           href={member.socials.linkedin}
                           target="_blank"
                           rel="noreferrer"
+                          aria-label={`LinkedIn — ${displayMember.name}`}
                           className="text-slate-400 hover:text-white transition-colors"
                         >
                           <LinkedinIcon className="w-4 h-4" />
@@ -221,6 +222,7 @@ export default function WhoWeAreClient({ initialStory, initialTeam }: WhoWeAreCl
                       {member.socials?.email && (
                         <a
                           href={`mailto:${member.socials.email}`}
+                          aria-label={`Email — ${displayMember.name}`}
                           className="text-slate-400 hover:text-white transition-colors"
                         >
                           <Mail className="w-4 h-4" />

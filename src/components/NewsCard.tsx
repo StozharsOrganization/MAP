@@ -7,6 +7,7 @@ import { useTranslation, getTranslatedNews } from '../lib/translations';
 import { NewsItem } from '../lib/types';
 import { deleteNewsAction } from '../lib/actions/contentActions';
 import { Edit2, Trash2, ArrowRight } from 'lucide-react';
+import { unsplashSrcSet } from '../lib/utils';
 import { YoutubeIcon } from './icons/BrandIcons';
 
 interface NewsCardProps {
@@ -58,6 +59,10 @@ export default function NewsCard({ item }: NewsCardProps) {
       <Link href={`/news/${item.slug}`} className="relative block h-48 w-full bg-slate-900 overflow-hidden">
         <img
           src={displayItem.coverImage}
+          srcSet={unsplashSrcSet(displayItem.coverImage)}
+          sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+          loading="lazy"
+          decoding="async"
           alt={displayItem.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
@@ -84,9 +89,9 @@ export default function NewsCard({ item }: NewsCardProps) {
         </div>
 
         <Link href={`/news/${item.slug}`} className="block group-hover:text-sky-300 transition-colors">
-          <h3 className="font-bold text-white text-base leading-snug line-clamp-2 mb-2">
+          <h2 className="font-bold text-white text-base leading-snug line-clamp-2 mb-2">
             {displayItem.title}
-          </h3>
+          </h2>
         </Link>
 
         <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed flex-1">
@@ -99,6 +104,7 @@ export default function NewsCard({ item }: NewsCardProps) {
             className="text-xs font-semibold text-sky-400 group-hover:text-white flex items-center gap-1 transition-colors"
           >
             <span>{t.newsSection.readMore}</span>
+            <span className="sr-only">: {displayItem.title}</span>
             <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>

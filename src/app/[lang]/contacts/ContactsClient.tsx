@@ -116,7 +116,7 @@ export default function ContactsClient({ initialContacts }: ContactsClientProps)
           <div className="lg:col-span-5 space-y-6">
             <div className="bg-[#0e2238] text-white p-8 rounded-3xl shadow-2xl border border-white/10 space-y-6 relative overflow-hidden">
               <div className="flex items-center justify-between">
-                <h3 className="text-xl font-bold">{t.contactsPage.infoTitle}</h3>
+                <h2 className="text-xl font-bold">{t.contactsPage.infoTitle}</h2>
                 {isAdmin && (
                   <button
                     onClick={() => setIsEditingInfo(!isEditingInfo)}
@@ -233,16 +233,16 @@ export default function ContactsClient({ initialContacts }: ContactsClientProps)
                   {t.contactsPage.followUs}
                 </p>
                 <div className="flex items-center gap-3">
-                  <a href="https://instagram.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#3b7da5] flex items-center justify-center text-white transition-colors">
+                  <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram" className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#3b7da5] flex items-center justify-center text-white transition-colors">
                     <InstagramIcon className="w-5 h-5" />
                   </a>
-                  <a href="https://facebook.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#3b7da5] flex items-center justify-center text-white transition-colors">
+                  <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook" className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#3b7da5] flex items-center justify-center text-white transition-colors">
                     <FacebookIcon className="w-5 h-5" />
                   </a>
-                  <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#3b7da5] flex items-center justify-center text-white transition-colors">
+                  <a href="https://linkedin.com" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#3b7da5] flex items-center justify-center text-white transition-colors">
                     <LinkedinIcon className="w-5 h-5" />
                   </a>
-                  <a href="https://youtube.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#3b7da5] flex items-center justify-center text-white transition-colors">
+                  <a href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube" className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#3b7da5] flex items-center justify-center text-white transition-colors">
                     <YoutubeIcon className="w-5 h-5" />
                   </a>
                 </div>
@@ -269,7 +269,7 @@ export default function ContactsClient({ initialContacts }: ContactsClientProps)
           <div className="lg:col-span-7">
             <div className="bg-[#0e2238] rounded-3xl border border-white/10 shadow-2xl p-8 sm:p-10 space-y-6 text-white">
               <div>
-                <h3 className="text-2xl font-extrabold text-white">{t.contactsPage.formTitle}</h3>
+                <h2 className="text-2xl font-extrabold text-white">{t.contactsPage.formTitle}</h2>
                 <p className="text-xs sm:text-sm text-slate-400 mt-1">
                   {t.contactsPage.formSubtitle}
                 </p>

@@ -141,6 +141,8 @@ export default function Header() {
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? (language === 'ua' ? 'Закрити меню' : 'Close menu') : (language === 'ua' ? 'Відкрити меню' : 'Open menu')}
+            aria-expanded={mobileMenuOpen}
             className="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/10"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

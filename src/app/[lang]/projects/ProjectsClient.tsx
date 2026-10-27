@@ -245,9 +245,9 @@ export default function ProjectsClient({ initialProjects }: ProjectsClientProps)
                     <span>{displayProj.dates}</span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-white group-hover:text-sky-300 transition-colors leading-snug">
+                  <h2 className="text-xl font-bold text-white group-hover:text-sky-300 transition-colors leading-snug">
                     {displayProj.title}
-                  </h3>
+                  </h2>
 
                   <p className="text-xs text-slate-300 leading-relaxed line-clamp-3 flex-1">
                     {displayProj.shortDesc}

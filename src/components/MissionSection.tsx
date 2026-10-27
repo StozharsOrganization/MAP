@@ -106,9 +106,9 @@ export default function MissionSection({ initialStory }: MissionSectionProps) {
               </div>
             ) : (
               <div className="space-y-4">
-                <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-snug text-white">
+                <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-snug text-white">
                   {displayStory.mission}
-                </h3>
+                </h2>
                 <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
                   {displayStory.vision}
                 </p>
@@ -147,7 +147,7 @@ export default function MissionSection({ initialStory }: MissionSectionProps) {
                 <div className="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-400 flex items-center justify-center mb-4 shrink-0">
                   <Icon className="w-6 h-6" />
                 </div>
-                <h4 className="font-bold text-white text-base mb-2">{val.title}</h4>
+                <h3 className="font-bold text-white text-base mb-2">{val.title}</h3>
                 <p className="text-xs text-slate-300 leading-relaxed flex-1">{val.desc}</p>
               </div>
             );

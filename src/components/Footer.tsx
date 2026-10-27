@@ -53,16 +53,16 @@ export default function Footer() {
               {t.footer.aboutDesc}
             </p>
             <div className="flex items-center gap-3 pt-2">
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-[#3b7da5] transition-colors">
+              <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-[#3b7da5] transition-colors">
                 <InstagramIcon className="w-4 h-4" />
               </a>
-              <a href="https://t.me" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-[#3b7da5] transition-colors">
+              <a href="https://t.me" target="_blank" rel="noreferrer" aria-label="Telegram" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-[#3b7da5] transition-colors">
                 <TelegramIcon className="w-4 h-4" />
               </a>
-              <a href="https://facebook.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-[#3b7da5] transition-colors">
+              <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-[#3b7da5] transition-colors">
                 <FacebookIcon className="w-4 h-4" />
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-[#3b7da5] transition-colors">
+              <a href="https://linkedin.com" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-[#3b7da5] transition-colors">
                 <LinkedinIcon className="w-4 h-4" />
               </a>
             </div>
@@ -70,9 +70,9 @@ export default function Footer() {
 
           {/* Col 2: Programs */}
           <div className="space-y-4">
-            <h4 className="text-base font-bold text-white tracking-wide">
+            <h2 className="text-base font-bold text-white tracking-wide">
               {t.footer.colPrograms}
-            </h4>
+            </h2>
             <ul className="space-y-2.5 text-sm text-slate-300">
               <li>
                 <Link href="/projects" className="hover:text-[#5a9bc4] transition-colors">
@@ -102,9 +102,9 @@ export default function Footer() {
 
           {/* Col 3: Navigation */}
           <div className="space-y-4">
-            <h4 className="text-base font-bold text-white tracking-wide">
+            <h2 className="text-base font-bold text-white tracking-wide">
               {t.footer.colNav}
-            </h4>
+            </h2>
             <ul className="space-y-2.5 text-sm text-slate-300">
               <li>
                 <Link href="/" className="hover:text-[#5a9bc4] transition-colors">
@@ -136,9 +136,9 @@ export default function Footer() {
 
           {/* Col 4: Contacts & Donate */}
           <div className="space-y-4">
-            <h4 className="text-base font-bold text-white tracking-wide">
+            <h2 className="text-base font-bold text-white tracking-wide">
               {t.footer.colContacts}
-            </h4>
+            </h2>
             <div className="space-y-2 text-sm text-slate-300">
               <p className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-[#5a9bc4]" />
@@ -182,7 +182,7 @@ export default function Footer() {
             <span className="text-white/20">•</span>
             <Link
               href="/admin"
-              className="text-slate-500 hover:text-slate-300 transition-colors"
+              className="text-slate-400 hover:text-slate-200 transition-colors"
               title="Адміністративна панель"
             >
               Адмін

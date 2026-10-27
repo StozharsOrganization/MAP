@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useAdmin } from '../context/AdminContext';
 import { useTranslation } from '../lib/translations';
+import { unsplashSrcSet } from '../lib/utils';
 import { HeroContent } from '../lib/types';
 import { updateHeroAction } from '../lib/actions/contentActions';
 import { Camera, Check, Edit3, Heart, Users, Sparkles } from 'lucide-react';
@@ -69,7 +70,12 @@ export default function HeroSection({ initialHero }: HeroSectionProps) {
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img
           src={hero.imageUrl}
-          alt="Молодь організації MAP"
+          srcSet={unsplashSrcSet(hero.imageUrl, [640, 1024, 1440, 1920])}
+          sizes="100vw"
+          alt={language === 'en' ? 'Young people of the MAP organisation' : 'Молодь організації MAP'}
+          fetchPriority="high"
+          loading="eager"
+          decoding="async"
           className="w-full h-full object-cover object-center"
         />
         {/* Lighter, softer gradient overlay so the image is clear and bright */}

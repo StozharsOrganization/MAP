@@ -244,7 +244,7 @@ export default function ReportsClient() {
               >
                 <div className="space-y-1">
                   <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">{doc.type}</span>
-                  <h4 className="font-bold text-white text-sm">{doc.title}</h4>
+                  <h3 className="font-bold text-white text-sm">{doc.title}</h3>
                   <p className="text-xs text-slate-400">{doc.desc}</p>
                   <span className="text-[10px] text-slate-500 block pt-1">{L("Дата реєстрації:", "Registration date:")} {doc.date}</span>
                 </div>

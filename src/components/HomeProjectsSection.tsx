@@ -6,7 +6,7 @@ import { useAdmin } from '../context/AdminContext';
 import { useTranslation, getTranslatedProject } from '../lib/translations';
 import { ProjectItem } from '../lib/types';
 import { deleteProjectAction } from '../lib/actions/contentActions';
-import { formatMoney } from '../lib/utils';
+import { formatMoney, unsplashSrcSet } from '../lib/utils';
 import { Plus, Edit2, Trash2, ArrowRight, CheckCircle2, Clock } from 'lucide-react';
 
 interface HomeProjectsSectionProps {
@@ -135,6 +135,10 @@ export default function HomeProjectsSection({ projects }: HomeProjectsSectionPro
                 <div className="relative h-48 w-full overflow-hidden bg-slate-900">
                   <img
                     src={displayProj.coverImage}
+                    srcSet={unsplashSrcSet(displayProj.coverImage)}
+                    sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                    loading="lazy"
+                    decoding="async"
                     alt={displayProj.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
@@ -183,6 +187,7 @@ export default function HomeProjectsSection({ projects }: HomeProjectsSectionPro
                     className="text-xs font-bold text-sky-400 hover:text-white flex items-center gap-1 transition-colors"
                   >
                     <span>{t.projectsSection.learnMore}</span>
+                    <span className="sr-only">: {displayProj.title}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
 
