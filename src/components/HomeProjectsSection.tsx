@@ -175,23 +175,7 @@ export default function HomeProjectsSection({ projects }: HomeProjectsSectionPro
                     {displayProj.shortDesc}
                   </p>
 
-                {/* Progress bar if donation goal exists */}
-                {proj.goalAmount && (
-                  <div className="space-y-1.5 pt-2">
-                    <div className="flex justify-between text-xs text-slate-400 font-medium">
-                      <span>{t.projectsSection.raised}: {formatMoney(proj.raisedAmount || 0)} {t.projectsSection.currency}</span>
-                      <span>{t.projectsSection.goal}: {formatMoney(proj.goalAmount)} {t.projectsSection.currency}</span>
-                    </div>
-                    <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-gradient-to-r from-[#3b7da5] to-emerald-400 rounded-full transition-all duration-500"
-                        style={{
-                          width: `${Math.min(100, Math.round(((proj.raisedAmount || 0) / proj.goalAmount) * 100))}%`
-                        }}
-                      />
-                    </div>
-                  </div>
-                )}
+
 
                 <div className="pt-3 border-t border-white/10 flex items-center justify-between">
                   <Link

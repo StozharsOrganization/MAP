@@ -259,23 +259,7 @@ export default function ProjectsClient({ initialProjects }: ProjectsClientProps)
                     </p>
                   )}
 
-                  {/* Progress bar */}
-                  {proj.goalAmount && (
-                    <div className="space-y-1.5 pt-2">
-                      <div className="flex justify-between text-xs text-slate-400 font-medium">
-                        <span>{t.projectsPage.raised}: {formatMoney(proj.raisedAmount || 0)} {t.projectsPage.currency}</span>
-                        <span>{t.projectsPage.goal}: {formatMoney(proj.goalAmount)} {t.projectsPage.currency}</span>
-                      </div>
-                      <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-[#3b7da5] to-emerald-400 rounded-full transition-all duration-500"
-                          style={{
-                            width: `${Math.min(100, Math.round(((proj.raisedAmount || 0) / proj.goalAmount) * 100))}%`
-                          }}
-                        />
-                      </div>
-                    </div>
-                  )}
+
 
                   <div className="pt-4 border-t border-white/10 flex items-center justify-between">
                     <button

@@ -12,18 +12,22 @@ import ThemeSwitcher from './ThemeSwitcher';
 export default function Footer() {
   const { openAdminLogin, openDonation, openVolunteer, language } = useAdmin();
   const { t } = useTranslation();
-  const clickTimesRef = useRef<number[]>([]);
+  const clickCountRef = useRef(0);
+  const resetTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleSecretCopyrightClick = () => {
-    const now = Date.now();
-    // Keep clicks from the last 3000ms
-    const recent = clickTimesRef.current.filter((time) => now - time < 3000);
-    recent.push(now);
-    clickTimesRef.current = recent;
+    clickCountRef.current += 1;
+    if (resetTimerRef.current) {
+      clearTimeout(resetTimerRef.current);
+    }
 
-    if (recent.length >= 5) {
-      clickTimesRef.current = [];
+    if (clickCountRef.current >= 5) {
+      clickCountRef.current = 0;
       openAdminLogin();
+    } else {
+      resetTimerRef.current = setTimeout(() => {
+        clickCountRef.current = 0;
+      }, 4000);
     }
   };
 
@@ -123,11 +127,6 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/reports" className="hover:text-[#5a9bc4] transition-colors">
-                  {language === 'ua' ? 'Звітність' : 'Reports'}
-                </Link>
-              </li>
-              <li>
                 <Link href="/contacts" className="hover:text-[#5a9bc4] transition-colors">
                   {t.footer.navContacts}
                 </Link>
@@ -170,7 +169,8 @@ export default function Footer() {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <p
             onClick={handleSecretCopyrightClick}
-            className="select-none cursor-default hover:text-slate-300 transition-colors"
+            className="select-none cursor-pointer hover:text-slate-300 transition-colors touch-manipulation active:scale-[0.99]"
+            title="MAP NGO"
           >
             © {new Date().getFullYear()} MAP Association for Youth Development and Social Integration. {t.footer.copyright}
           </p>
@@ -178,6 +178,14 @@ export default function Footer() {
           <div className="flex items-center gap-4">
             <Link href="/privacy-policy" className="hover:text-slate-200 transition-colors">
               {t.footer.privacy}
+            </Link>
+            <span className="text-white/20">•</span>
+            <Link
+              href="/admin"
+              className="text-slate-500 hover:text-slate-300 transition-colors"
+              title="Адміністративна панель"
+            >
+              Адмін
             </Link>
             <span className="text-white/20">•</span>
             <ThemeSwitcher />

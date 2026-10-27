@@ -18,7 +18,6 @@ export default function Header() {
     { href: '/who-we-are', label: language === 'ua' ? 'Про нас' : 'Who we are' },
     { href: '/projects', label: language === 'ua' ? 'Програми' : 'Programs' },
     { href: '/news', label: language === 'ua' ? 'Новини' : 'News' },
-    { href: '/reports', label: language === 'ua' ? 'Звітність' : 'Reports' },
     { href: '/contacts', label: language === 'ua' ? 'Контакти' : 'Contacts' },
   ];
 
